@@ -71,3 +71,33 @@ function enable_gnome_nightly() {
     echo -------------------
     eval "$FP_REMOTE_ADD gnome-nightly $FP_GNOME_URL" >> "$LOG" 2>&1 && echo "Finished." || echo "ERROR"
 }
+
+function download_gnome_extensions() {   
+    echo -------------------
+    echo "Downloading Gnome Extensions..."
+    echo -------------------
+    
+    pushd "$GNOME_EXTENSION_DIR" || return 1
+    
+    eval "$GET_FILE $EXTENSION_URL/$TAKS_WIDGET"
+    eval "$GET_FILE $EXTENSION_URL/$READING"
+    eval "$GET_FILE $EXTENSION_URL/$PERFECTION"
+    eval "$GET_FILE $EXTENSION_URL/$HIDE_TOPBAR"
+    eval "$GET_FILE $EXTENSION_URL/$HOT_CORNERS"
+    popd || return 1
+}
+
+function install_gnome_extensions() {    
+    echo -------------------
+    echo "Installing Gnome Extensions..."
+    echo -------------------
+    
+    pushd "$GNOME_EXTENSION_DIR" || return 1
+    
+    eval "$EXT_INSTALL $TAKS_WIDGET"
+    eval "$EXT_INSTALL $READING"
+    eval "$EXT_INSTALL $PERFECTION"
+    eval "$EXT_INSTALL $HIDE_TOPBAR"
+    eval "$EXT_INSTALL $HOT_CORNERS"
+    popd || return 1
+}
