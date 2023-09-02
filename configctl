@@ -140,3 +140,44 @@ function install_age() {
 function install_yq() {
 	eval "$GET_FILE https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 --output ~/.local/bin/yq" &&  chmod +x ~/.local/bin/yq >> "$LOG" 2>&1 && echo "Finished." || echo "ERROR"
 }
+
+function install_gh_cli() {
+    GH_BIN="$HOME/.local/bin/gh"
+    # GH_MAN="$HOME/.local/share/man/man1"
+
+    echo -------------------
+    echo "Installing Github Cli..."
+    echo -------------------
+    eval "$GET_FILE $GH_CLI_URL" | tar -zx -C ~/.cache; cp ~/.cache/gh_"$GH_VERSION"_linux_amd64/bin/* ~/.local/bin; cp ~/.cache/gh_"$GH_VERSION"_linux_amd64/share/man/man1/* ~/.local/share/man/man1 >> "$LOG" 2>&1 && echo "Finished." || echo "ERROR"
+    [[ ! -x "$GH_BIN" ]] || chmod +x "$GH_BIN"
+
+}
+
+function install_glab_cli() {
+    GLAB_BIN="$HOME/.local/bin/glab"
+
+    echo -------------------
+    echo "Installing Gitlab Cli..."
+    echo -------------------
+  
+    eval "$GET_FILE $GLAB_CLI_URL" | tar -C ~/.cache -xzf -; install -m755 ~/.cache/bin/glab ~/.local/bin/glab >> "$LOG" 2>&1 && echo "Finished." || echo "ERROR"
+    [[ ! -x "$GLAB_BIN" ]] || chmod +x "$GLAB_BIN"
+
+}
+
+function download_qbittorrent_plugins() {
+    echo -------------------
+    echo "Downloading QBittorrent plugins..."
+    echo -------------------
+    
+    pushd "$QBITTORRENT_PLUGINS_DIR" || return 1
+    eval "$GET_FILE $GH_RAW_URL/nbusseneau/qBittorrent-rutracker-plugin/master/rutracker.py"
+    eval "$GET_FILE $GH_RAW_URL/imDMG/qBt_SE/master/engines/rutor.py"
+    eval "$GET_FILE $GH_RAW_URL/LightDestory/qBittorrent-Search-Plugins/master/src/engines/rarbg.py"
+    eval "$GET_FILE $GH_RAW_URL/LightDestory/qBittorrent-Search-Plugins/master/src/engines/ettv.py"
+    eval "$GET_FILE $GH_RAW_URL/LightDestory/qBittorrent-Search-Plugins/master/src/engines/btetree.py"
+    eval "$GET_FILE $GH_RAW_URL/iordic/qbittorrent-search-plugins/master/engines/elitetorrent.py"
+    eval "$GET_FILE $GH_RAW_URL/kjjejones44/b4tg_search_plugin/master/bt4g.py"
+    popd || return 1
+
+}
