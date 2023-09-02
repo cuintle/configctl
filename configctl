@@ -3,6 +3,14 @@ set -euo pipefail
 IFS=$'\n\t'
 
 ZSH_CUSTOM="$HOME/.oh-my-zsh/custom"
+CONFIGFILES_DIR="$HOME/.system_configuration"
+CONFIG_VARS="$CONFIGFILES_DIR/vars/env.vars"
+
+# shellcheck disable=SC1090
+source "$CONFIG_VARS"
+
+# shellcheck disable=SC1091
+source "$CONFIGFILES_DIR"/zsh/.zprofile
 
 function install_oh_my_zsh() {
     echo -------------------
@@ -14,4 +22,13 @@ function install_oh_my_zsh() {
     fi
 
     eval "$GET_FILE $OHMYZSH_URL" | sh -s -- >> "$LOG" 2>&1 && echo "Finished." || echo "ERROR"
-    }
+}
+
+function install_powerlevel10k() {
+    echo -------------------
+    echo "Installing Powerlevel10k..."
+    echo -------------------
+    if [[ ! -d "$ZSH_CUSTOM/themes/powerlevel10k" ]]; then
+        git clone --depth=1 "$GH_URL/romkatv/powerlevel10k.git" "$ZSH_CUSTOM/themes/powerlevel10k" >> "$LOG" 2>&1 && echo "Finished." || echo "ERROR"
+    fi
+}
