@@ -353,3 +353,8 @@ function decrypt_gocryptfs_files() {
         fi
     fi
 }
+
+function decrypt() {
+    extract_gocryptfs_encrypted_files
+    decrypt_gocryptfs_files
+}
