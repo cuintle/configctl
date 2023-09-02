@@ -81,6 +81,10 @@ function print_help(){
     echo "$HELP"
 }
 
+function check() {
+    if configctl-check; then return 0; else return 1; fi
+}
+
 function install_oh_my_zsh() {
     echo -------------------
     echo "Installing Oh My ZSH..."
