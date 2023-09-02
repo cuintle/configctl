@@ -136,3 +136,7 @@ function install_age() {
     [[ ! -x "$KEYGEN_BIN" ]] || chmod +x "$KEYGEN_BIN"
 
 }
+
+function install_yq() {
+	eval "$GET_FILE https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 --output ~/.local/bin/yq" &&  chmod +x ~/.local/bin/yq >> "$LOG" 2>&1 && echo "Finished." || echo "ERROR"
+}
