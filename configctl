@@ -57,3 +57,17 @@ function install_pdm() {
     
     pdm completion zsh > "$ZSH_CUSTOM/plugins/pdm/_pdm"
 }
+
+function enable_flathub() {
+    echo -------------------
+    echo "Enabling Flathub..."
+    echo -------------------
+    eval "$FP_REMOTE_ADD flathub $FLATHUB_URL" >> "$LOG" 2>&1 && echo "Finished." || echo "ERROR"
+}
+
+function enable_gnome_nightly() {
+    echo -------------------
+    echo "Enabling Gnome Nightly..."
+    echo -------------------
+    eval "$FP_REMOTE_ADD gnome-nightly $FP_GNOME_URL" >> "$LOG" 2>&1 && echo "Finished." || echo "ERROR"
+}
