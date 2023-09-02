@@ -299,11 +299,57 @@ function install_vscode() {
     distrobox create --image "$IMAGE_VSCODIUM_BASE"  --name code --home "$DISTROBOX_HOMES/Code" --yes >> "$LOG" 2>&1 && echo "Finished." || echo "ERROR"
 }
 
-    
 function install_vscodium() {
     echo -------------------
     echo "Installing VSCodium..."
     echo -------------------
     
     distrobox create --image "$IMAGE_VSCODIUM_BASE" --name codium --home "$DISTROBOX_HOMES/Codium" --yes >> "$LOG" 2>&1 && echo "Finished." || echo "ERROR"
+}
+
+function extract_gocryptfs_encrypted_files() {
+    echo -------------------
+    echo "Extracting encrypted files..."
+    echo -------------------
+    
+    ENCRYPTED_FILE="$ENCRYPTED_DIR/encrypted.tar.zst"
+    
+    if [[ ! -d "$DECRYPTED_DATA_DIR" ]]; then
+        mkdir -p "$ENCRYPTED_DATA_DIR"
+        mkdir -p "$DECRYPTED_DATA_DIR"
+    fi
+    if [[ ! "$(ls -A "$DECRYPTED_DATA_DIR")" ]]; then
+        tar -I 'zstd' -xf "$ENCRYPTED_FILE" -C "$ENCRYPTED_DATA_DIR" >> "$LOG" 2>&1 && echo "Finished." || echo "ERROR"
+    fi
+}
+
+function backup_gocryptfs_encrypted_files() {
+    echo -------------------
+    echo "Backing up encrypted files..."
+    echo -------------------
+    
+    pushd "$ENCRYPTED_DATA_DIR" || return 1
+    tar -I 'zstd --ultra -22' -cf "$ENCRYPTED_FILE" . 
+    popd || return 1
+}
+
+function decrypt_gocryptfs_files() {
+    echo -------------------
+    echo "Decrypting files..."
+    echo -------------------
+    
+    PASSFILE="$SECRET_FILES/passfile"
+    DECRYPT_ERROR=""
+    
+    if [[ ! -f "$PASSFILE" ]]; then
+        zenity --title "Decrypt config files" --password --width 200 --height 50 > "$PASSFILE"
+    fi
+    if "$HOME"/.local/bin/gocryptfs -passfile "$PASSFILE" "$ENCRYPTED_DATA_DIR" "$DECRYPTED_DATA_DIR" >> "$LOG" 2>&1; then echo "Your files was successfully decrypted."; else DECRYPT_ERROR="ERROR"; fi
+        
+    if [[ -n "$DECRYPT_ERROR" ]]; then
+        rm "$PASSFILE"
+        if [[ "$(ls -A "$DECRYPTED_DATA_DIR")" ]]; then
+            fusermount3 -u "$DECRYPTED_DATA_DIR"
+        fi
+    fi
 }
