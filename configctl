@@ -469,3 +469,7 @@ function configure_gnome() {
     
     dconf load -f / < "$CONFIGFILES_DIR/files/gnome/gnome.confs" >> "$LOG" 2>&1 && echo "Finished." || echo "ERROR"
 }
+
+function finish() {
+    zenity --width 200 --height 50 --info --title "System Configuration" --icon-name=info --text "<big><b>We finished setting up your system.</b></big>"
+    }
