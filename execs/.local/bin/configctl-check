@@ -2,3 +2,78 @@
 set -euo pipefail
 IFS=$'\n\t'
 
+# shellcheck disable=SC1091
+source "${HOME}"/.system_configuration/vars/env.vars
+
+function check_commands() {
+    if ! command -v qemu-img > /dev/null; then CHECK_ERROR="qemu-img $COMMAND_NOT_FOUND" && return 1; fi
+    if ! command -v curl > /dev/null; then CHECK_ERROR="curl $COMMAND_NOT_FOUND" && return 1; fi
+    if ! command -v virt-install > /dev/null; then CHECK_ERROR="virt-install $COMMAND_NOT_FOUND" && return 1; fi
+    if ! command -v distrobox > /dev/null; then CHECK_ERROR="distrobox $COMMAND_NOT_FOUND" && return 1; fi
+    if ! command -v zstd > /dev/null; then CHECK_ERROR="zstd $COMMAND_NOT_FOUND" && return 1; fi
+    if ! command -v tar > /dev/null; then CHECK_ERROR="tar $COMMAND_NOT_FOUND" && return 1; fi
+    if ! command -v https > /dev/null; then CHECK_ERROR="httpie $COMMAND_NOT_FOUND" && return 1; fi
+    if ! command -v gnome-extensions > /dev/null; then CHECK_ERROR="gnome-extensions $COMMAND_NOT_FOUND" && return 1; fi
+    if ! command -v git > /dev/null; then CHECK_ERROR="git $COMMAND_NOT_FOUND" && return 1; fi
+    if ! command -v xdg-settings > /dev/null; then CHECK_ERROR="xdg-settings $COMMAND_NOT_FOUND" && return 1; fi
+    if ! command -v pip3 > /dev/null; then CHECK_ERROR="xdg-settings $COMMAND_NOT_FOUND" && return 1; fi
+    }
+
+function check_dirs() {
+    if [ ! -d "$CONFIGFILES_DIR" ]; then
+        mkdir -p "$CONFIGFILES_DIR"
+    fi
+    if [ ! -d "$QBITTORRENT_PLUGINS_DIR" ]; then
+        mkdir -p "$QBITTORRENT_PLUGINS_DIR"
+    fi
+    if [ ! -d "$GNOME_EXTENSION_DIR" ]; then
+        mkdir -p "$GNOME_EXTENSION_DIR"
+    fi
+    if [ ! -d "$CONFIG_DATA_DIR" ]; then
+        mkdir -p "$CONFIG_DATA_DIR"
+    fi
+    if [ ! -d "$DISTROBOX_HOMES" ]; then
+        mkdir -p "$DISTROBOX_HOMES"
+    fi
+    if [ ! -d "$CODIUM_HOME" ]; then
+        mkdir -p "$CODIUM_HOME"
+    fi
+    if [ ! -d "$CODE_HOME" ]; then
+        mkdir -p "$CODE_HOME"
+    fi
+    if [ ! -d "$SECRET_FILES" ]; then
+        mkdir -p "$SECRET_FILES"
+    fi
+    if [ ! -d "$FREETUBE_SECRET_CONFIG_DIR" ]; then
+        mkdir -p "$FREETUBE_SECRET_CONFIG_DIR"
+    fi
+    if [ ! -d "$FONTS_DIR" ]; then
+        mkdir -p "$FONTS_DIR"
+    fi
+    if [ ! -d "$ICONS_DIR" ]; then
+        mkdir -p "$ICONS_DIR"
+    fi
+    if [ ! -d "$THEMES_DIR" ]; then
+        mkdir -p "$THEMES_DIR"
+    fi
+    if [ ! -d "$SECRET_STOW" ]; then
+        mkdir -p "$SECRET_STOW"
+    fi
+    }
+
+function check_system() {
+    echo -------------------
+    echo "Checking commands..."
+    # echo -------------------
+    if check_commands; then echo "Finished: OK"; else echo "ERROR: $CHECK_ERROR"; fi
+    echo
+    echo -------------------
+    echo "Checking directories..."
+    # echo -------------------
+    if check_dirs; then echo "Finished: OK"; fi
+    echo
+    }
+
+check_system
+
+
