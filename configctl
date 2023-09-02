@@ -101,3 +101,10 @@ function install_gnome_extensions() {
     eval "$EXT_INSTALL $HOT_CORNERS"
     popd || return 1
 }
+
+function install_distrobox() {
+    echo -------------------
+    echo "Installing Distrobox..."
+    echo -------------------
+    eval "$GET_FILE $DISTROBOX_URL" | sh -s -- --next --prefix ~/.local >> "$LOG" 2>&1 && echo "Finished." || echo "ERROR"
+}
