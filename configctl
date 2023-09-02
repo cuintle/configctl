@@ -2,6 +2,8 @@
 set -euo pipefail
 IFS=$'\n\t'
 
+ZSH_CUSTOM="$HOME/.oh-my-zsh/custom"
+
 function install_oh_my_zsh() {
     echo -------------------
     echo "Installing Oh My ZSH..."
