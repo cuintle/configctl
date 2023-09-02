@@ -429,3 +429,43 @@ function backup_vscode_config_files() {
     popd || return 1
 }
 
+    
+function extract_templates() {
+    echo -------------------
+    echo "Extracting Templates..."
+    echo -------------------
+    
+    tar -I 'zstd' -xvf "$DECRYPTED_DATA_DIR/templates.tar.zst" -C "$HOME/Templates" >> "$LOG" 2>&1 && echo "Finished." || echo "ERROR"
+}
+
+function extract_encrypted_history() {
+    echo -------------------
+    echo "Extracting encrypted history..."
+    echo -------------------
+    
+    tar -I 'zstd' -xvf "$DECRYPTED_DATA_DIR/history.tar.zst" -C "$SECRET_STOW" >> "$LOG" 2>&1 && echo "Finished." || echo "ERROR"
+}
+
+function extract_icons() {
+    echo -------------------
+    echo "Extracting icons..."
+    echo -------------------
+    
+    tar -I 'zstd' -xvf "$CONFIGFILES_DIR/archives/icons.tar.zst" -C "$XDG_DATA_HOME/icons" >> "$LOG" 2>&1 && echo "Finished." || echo "ERROR"
+}
+
+function extract_fonts() {
+    echo -------------------
+    echo "Extracting fonts..."
+    echo -------------------
+    
+    tar -I 'zstd' -xvf "$CONFIGFILES_DIR/archives/fonts.tar.zst" -C "$XDG_DATA_HOME/fonts" >> "$LOG" 2>&1 && echo "Finished." || echo "ERROR"
+}
+
+function configure_gnome() {
+    echo -------------------
+    echo "Setting up GNOME..."
+    echo -------------------
+    
+    dconf load -f / < "$CONFIGFILES_DIR/files/gnome/gnome.confs" >> "$LOG" 2>&1 && echo "Finished." || echo "ERROR"
+}
