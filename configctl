@@ -2,3 +2,14 @@
 set -euo pipefail
 IFS=$'\n\t'
 
+function install_oh_my_zsh() {
+    echo -------------------
+    echo "Installing Oh My ZSH..."
+    echo -------------------
+
+    if [[ -d "$HOME/.oh-my-zsh" ]]; then
+        rm -rf "$HOME/.oh-my-zsh"
+    fi
+
+    eval "$GET_FILE $OHMYZSH_URL" | sh -s -- >> "$LOG" 2>&1 && echo "Finished." || echo "ERROR"
+    }
