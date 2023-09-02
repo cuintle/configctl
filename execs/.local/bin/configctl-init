@@ -1,4 +1,40 @@
-#! /usr/bin/env bash
+#!/usr/bin/env bash
 set -euo pipefail
 IFS=$'\n\t'
 
+[[ ! -d "${CONFIGFILES_DIR}" ]] && mkdir -p "${CONFIGFILES_DIR}"
+
+[[ ! $(ls -A "${CONFIGFILES_DIR}") ]] && exit 0
+
+if command -v git > /dev/null; then git clone https://github.com/cuintle/configctl.git "${CONFIGFILES_DIR}"; else echo "git command not found."; fi
+
+[[ -x ${CONFIGCTL_EXECS}/configctl ]] || chmod +x "${CONFIGCTL_EXECS}"/configctl
+[[ -x ${CONFIGCTL_EXECS}/configctl-check ]] || chmod +x "${CONFIGCTL_EXECS}"/configctl-check
+[[ -x ${CONFIGCTL_EXECS}/configctl-init ]] || chmod +x "${CONFIGCTL_EXECS}"/configctl-init
+
+if [[ -f ${BASH_FILES}/.bash_profile ]]; then
+    # shellcheck disable=SC1091
+    source "${BASH_FILES}"/.bash_profile
+fi
+if [[ -f ${ZSH_FILES}/.zprofile ]]; then
+    # shellcheck disable=SC1091
+    source "${ZSH_FILES}"/.zprofile
+fi
+if [[ -f ${VARS_FILES}/env.vars ]]; then
+    # shellcheck disable=SC1091
+    source "${VARS_FILES}"/env.vars
+fi
+
+if [[ ! -f ${USER_HOME}/.zshrc ]]; then
+    touch "${USER_HOME}"/.zshrc
+fi
+
+if [[ -f ${CONFIGCTL_EXECS}/configctl-check ]]; then
+    unbuffer "${CONFIGCTL_EXECS}"/configctl-check
+fi
+
+if [[ -f ${CONFIGCTL_EXECS}/configctl ]]; then
+    unbuffer "${CONFIGCTL_EXECS}"/configctl --configure-system >> "${USER_HOME}"/system_configuration_init.log 2>&1 &
+fi
+
+exit 0
