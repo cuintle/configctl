@@ -32,3 +32,28 @@ function install_powerlevel10k() {
         git clone --depth=1 "$GH_URL/romkatv/powerlevel10k.git" "$ZSH_CUSTOM/themes/powerlevel10k" >> "$LOG" 2>&1 && echo "Finished." || echo "ERROR"
     fi
 }
+
+function install_poetry() {
+    echo -------------------
+    echo "Installing Poetry..."
+    echo -------------------
+    eval "$GET_FILE https://install.python-poetry.org" | python3 - >> "$LOG" 2>&1 && echo "Finished." || echo "ERROR: Installation error or Poetry is already installed."
+    if [[ ! -d "$ZSH_CUSTOM/plugins/poetry" ]]; then
+        mkdir -p "$ZSH_CUSTOM/plugins/poetry"
+    fi
+    
+    poetry completions zsh > "$ZSH_CUSTOM/plugins/poetry/_poetry"
+    
+}
+
+function install_pdm() {  
+    echo -------------------
+    echo "Installing PDM..."
+    echo -------------------
+    eval "$GET_FILE $PDM_URL" | python3 - >> "$LOG" 2>&1 && echo "Finished." || echo "ERROR: Installation error or PDM is already installed."
+    if [[ ! -d "$ZSH_CUSTOM/plugins/pdm" ]]; then
+        mkdir -p "$ZSH_CUSTOM/plugins/pdm"
+    fi
+    
+    pdm completion zsh > "$ZSH_CUSTOM/plugins/pdm/_pdm"
+}
