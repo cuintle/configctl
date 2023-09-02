@@ -585,3 +585,140 @@ function configure_system() {
     
     finish
     }
+
+while :; do
+	case $1 in
+	    --check)
+		    if check; then echo "No error found."; else echo "Error found: Aborting..."; fi
+		    exit 0
+		    ;;
+	    --enable-gnome-nightly)
+	        if enable_gnome_nightly; then echo "No error found."; else echo "Error found: Aborting..."; fi
+			exit 0
+			;;
+		--install-flatpak-runtimes)
+	        if install_flatpak_runtimes; then echo "No error found."; else echo "Error found: Aborting..."; fi
+			exit 0
+			;;
+		--install-flatpak-apps)
+	        if install_flatpak_apps; then echo "No error found."; else echo "Error found: Aborting..."; fi
+			exit 0
+			;;
+		--install-distrobox)
+	        if install_distrobox; then echo "No error found."; else echo "Error found: Aborting..."; fi
+			exit 0
+			;;
+		--download-gnome-extensions)
+	        if download_gnome_extensions; then echo "No error found."; else echo "Error found: Aborting..."; fi
+			exit 0
+			;;
+		--install-gnome-extensions)
+	        if install_gnome_extensions; then echo "No error found."; else echo "Error found: Aborting..."; fi
+			exit 0
+			;;
+		--install-gocryptfs)
+	        if install_gocryptfs; then echo "No error found."; else echo "Error found: Aborting..."; fi
+			exit 0
+			;;
+		--install-age)
+	        if install_age; then echo "No error found."; else echo "Error found: Aborting..."; fi
+			exit 0
+			;;
+		--install-gh-cli)
+	        if install_gh_cli; then echo "No error found."; else echo "Error found: Aborting..."; fi
+			exit 0
+			;;
+		--install-glab-cli)
+	        if install_glab_cli; then echo "No error found."; else echo "Error found: Aborting..."; fi
+			exit 0
+			;;
+		--install-yq)
+			if install_yq; then echo "No error found."; else echo "Error found: Aborting..."; fi
+			exit 0
+			;;
+		--download-qbittorrent-plugins)
+	        if download_qbittorrent_plugins; then echo "No error found."; else echo "Error found: Aborting..."; fi
+			exit 0
+			;;
+		--install-adw-gtk3-theme)
+	        if install_adw_gtk3_theme; then echo "No error found."; else echo "Error found: Aborting..."; fi
+			exit 0
+			;;
+		--set-url-handler)
+	        if set_url_handler; then echo "No error found."; else echo "Error found: Aborting..."; fi
+			exit 0
+			;;
+		--set-cisco-pttp-handler)
+	        if set_cisco_pttp_handler; then echo "No error found."; else echo "Error found: Aborting..."; fi
+			exit 0
+			;;
+		--install-vscode)
+	        if install_vscode; then echo "No error found."; else echo "Error found: Aborting..."; fi
+			exit 0
+			;;
+		--install-vscodium)
+	        if install_vscodium; then echo "No error found."; else echo "Error found: Aborting..."; fi
+			exit 0
+			;;
+		--misc)
+	        if misc; then echo "No error found."; else echo "Error found: Aborting..."; fi
+			exit 0
+			;;
+		--decrypt)
+	        if decrypt; then echo "No error found."; else echo "Error found: Aborting..."; fi
+			exit 0
+			;;
+		--finish)
+	        if finish; then echo "No error found."; else echo "Error found: Aborting..."; fi
+			exit 0
+			;;
+		--install-ohmyzsh)
+			if install_oh_my_zsh; then echo "No error found."; else echo "Error found: Aborting..."; fi
+			exit 0
+			;;
+		--install-poetry)
+		    if install_poetry; then echo "No error found."; else echo "Error found: Aborting..."; fi
+		    exit 0
+			;;
+		--install-pdm)
+		    if install_pdm; then echo "No error found."; else echo "Error found: Aborting..."; fi
+		    exit 0
+			;;
+		--enable-flathub)
+		    if enable_flathub; then echo "No error found."; else echo "Error found: Aborting..."; fi
+		    exit 0
+			;;
+        --install-powerlevel10k)
+            if install_powerlevel10k; then echo "No error found."; else echo "Error found: Aborting..."; fi
+		    exit 0
+            ;;
+        --backup-freetube)
+            if backup_freetube; then echo "No error found."; else echo "Error found: Aborting..."; fi
+		    exit 0
+            ;;
+        --backup-vscodium-config-files)
+            if backup_vscodium_config_files; then echo "No error found."; else echo "Error found: Aborting..."; fi
+		    exit 0
+            ;;
+        --backup-vscode-config-files)
+            if backup_vscode_config_files; then echo "No error found."; else echo "Error found: Aborting..."; fi
+		    exit 0
+            ;;
+        --configure-gnome)
+            if configure_gnome; then echo "No error found."; else echo "Error found: Aborting..."; fi
+		    exit 0
+            ;;
+		--configure-system)
+		    if configure_system; then echo "No error found."; else echo "Error found: Aborting..."; fi
+		    exit 0
+			;;
+		-*)
+			echo "ERROR: Invalid option"
+			exit 1
+			;;
+		*)
+		    echo "ERROR: Invalid option"
+			exit 1
+			;;
+	esac
+done  
