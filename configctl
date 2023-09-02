@@ -358,3 +358,36 @@ function decrypt() {
     extract_gocryptfs_encrypted_files
     decrypt_gocryptfs_files
 }
+
+function extract_freetube_compressed_files() {
+    echo -------------------
+    echo "Extracting Freetube files..."
+    echo -------------------
+    
+    tar -I 'zstd' -xvf "$DECRYPTED_DATA_DIR/freetube.tar.zst" -C "$FREETUBE_SECRET_CONFIG_DIR" >> "$LOG" 2>&1 && echo "Finished." || echo "ERROR"
+}
+
+# Freetube was not working with simlinks
+function configure_freetube() {
+    echo -------------------
+    echo "Setting up Freetube..."
+    echo -------------------
+
+    rsync -avu "$FREETUBE_SECRET_CONFIG_DIR"/{history.db,Preferences,profiles.db,playlists.db,settings.db} "$FREETUBE_CONFIG_DIR" >> "$LOG" 2>&1 && echo "Finished." || echo "ERROR"
+}
+
+function backup_freetube() {
+    echo -------------------
+    echo "Backing up Freetube files..."
+    echo -------------------
+    
+    TMP_DIR="/tmp/freetube"
+    
+    mkdir -p $TMP_DIR
+    
+    rsync -avu "$FREETUBE_CONFIG_DIR"/{history.db,Preferences,profiles.db,playlists.db,settings.db} "$TMP_DIR" >> "$LOG" 2>&1 && echo "Finished." || echo "ERROR"
+    
+    pushd $TMP_DIR || return 1
+    tar -I 'zstd --ultra -22' -cvf "$DECRYPTED_DATA_DIR"/freetube.tar.zst history.db Preferences profiles.db playlists.db settings.db
+    popd || return 1
+}
