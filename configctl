@@ -296,7 +296,7 @@ function install_vscode() {
     echo "Installing VSCode..."
     echo -------------------
     
-    distrobox create --image "$IMAGE_VSCODIUM_BASE"  --name code --home "$DISTROBOX_HOMES/Code" --init-hooks "microdnf install code -y" --yes >> "$LOG" 2>&1 && echo "Finished." || echo "ERROR"
+    distrobox create --image "$IMAGE_VSCODIUM_BASE"  --name code --home "$DISTROBOX_HOMES/Code" --yes >> "$LOG" 2>&1 && echo "Finished." || echo "ERROR"
 }
 
     
@@ -305,5 +305,5 @@ function install_vscodium() {
     echo "Installing VSCodium..."
     echo -------------------
     
-    distrobox create --image "$IMAGE_VSCODIUM_BASE" --name codium --home "$DISTROBOX_HOMES/Codium" --init-hooks "microdnf install codium -y" --yes >> "$LOG" 2>&1 && echo "Finished." || echo "ERROR"
+    distrobox create --image "$IMAGE_VSCODIUM_BASE" --name codium --home "$DISTROBOX_HOMES/Codium" --yes >> "$LOG" 2>&1 && echo "Finished." || echo "ERROR"
 }
