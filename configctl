@@ -472,4 +472,116 @@ function configure_gnome() {
 
 function finish() {
     zenity --width 200 --height 50 --info --title "System Configuration" --icon-name=info --text "<big><b>We finished setting up your system.</b></big>"
+}
+
+   
+function configure_system() {
+    
+    enable_flathub
+    
+    install_flatpak_runtimes &
+    INSTALLING_FLATPAK_RUNTIMES=$!
+    
+    install_oh_my_zsh
+    
+    install_powerlevel10k
+    
+    install_poetry
+    
+    install_pdm
+    
+    # download_qbittorrent_plugins
+    
+    download_gnome_extensions
+ 
+    install_gnome_extensions 
+    
+    install_adw_gtk3_theme 
+    
+    extract_icons
+    
+    extract_fonts
+    
+    install_age
+    
+    install_gh_cli
+    
+    install_gocryptfs &
+    INSTALLING_CRYPT_TOOLS=$!
+    
+    wait "$INSTALLING_FLATPAK_RUNTIMES"
+    
+    install_flatpak_apps &
+    INSTALLING_FLATPAK_APPS=$!
+    
+    enable_gnome_nightly
+    
+    install_distrobox
+    
+    # install_vscode &
+    # INSTALLING_VSCODE=$!
+    
+    install_vscodium &
+    CREATING_VSCODIUM_DISTROBOX=$!
+       
+    wait "$INSTALLING_CRYPT_TOOLS"
+    
+    wait "$INSTALLING_FLATPAK_APPS"
+    set_url_handler
+    
+    extract_gocryptfs_encrypted_files
+
+    decrypt_gocryptfs_files
+    
+    extract_freetube_compressed_files && configure_freetube
+    
+    wait "$CREATING_VSCODIUM_DISTROBOX"
+    distrobox enter codium -- /usr/bin/true &
+    INSTALLING_VSCODIUM=$!
+    wait "$INSTALLING_VSCODIUM"
+    
+    extract_vscodium_config_files
+    stow vscodium --dir "$SECRET_STOW"  --target "$HOME"
+    
+    #wait "$INSTALLING_VSCODE"
+    #extract_vscode_config_files
+    #stow vscode --dir "$SECRET_STOW"  --target "$HOME"
+    
+    extract_encrypted_history
+    
+    extract_templates
+    
+    pushd "$HOME" || return 1
+    rm -f {.p10k.zsh,.zprofile,.zsh_history,.zshrc}
+    
+    stow zsh --dir "$CONFIGFILES_DIR"  --target "$HOME"
+    popd || return 1
+    
+    pushd "$HOME" || return 1
+    rm -f {.bash_history,.bash_profile,.bashrc,.profile}
+    
+    stow bash --dir "$CONFIGFILES_DIR"  --target "$HOME"
+    popd || return 1
+    
+    rm -f "$APPS_DESKTOP_FILES"/codium.desktop
+    stow apps --dir "$CONFIGFILES_DIR"  --target "$HOME"
+    
+    rm -f "$HOME"/.config/micro/settings.json
+    stow micro --dir "$CONFIGFILES_DIR"  --target "$HOME"
+    
+    stow history --dir "$SECRET_STOW"  --target "$HOME"
+    
+    stow blackbox_theme --dir "$CONFIGFILES_DIR"  --target "$HOME"
+    
+    pushd "$HOME"/.local/bin || return 1
+    rm -f configctl-init
+    
+    stow execs --dir "$CONFIGFILES_DIR" --target "$HOME"
+    popd || return 1
+    
+    wait
+    
+    configure_gnome
+    
+    finish
     }
