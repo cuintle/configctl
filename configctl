@@ -391,3 +391,41 @@ function backup_freetube() {
     tar -I 'zstd --ultra -22' -cvf "$DECRYPTED_DATA_DIR"/freetube.tar.zst history.db Preferences profiles.db playlists.db settings.db
     popd || return 1
 }
+
+function extract_vscodium_config_files() {
+    echo -------------------
+    echo "Extracting VSCodium configuration files..."
+    echo -------------------
+    
+    tar -I 'zstd' -xvf "$DECRYPTED_DATA_DIR/vscodium.tar.zst" -C "$SECRET_STOW" >> "$LOG" 2>&1 && echo "Finished." || echo "ERROR"
+}
+
+function backup_vscodium_config_files() {
+    echo -------------------
+    echo "Backing up VSCodium configuration files..."
+    echo -------------------
+    
+    pushd "$SECRET_STOW" || return 1
+    tar -I 'zstd --ultra -22' -cvf "$DECRYPTED_DATA_DIR/vscodium.tar.zst" vscodium
+    popd || return 1
+    
+}
+
+function extract_vscode_config_files() {
+    echo -------------------
+    echo "Extracting VSCode configuration files..."
+    echo -------------------
+    
+    tar -I 'zstd' -xvf "$DECRYPTED_DATA_DIR/vscode.tar.zst" -C "$SECRET_STOW" >> "$LOG" 2>&1 && echo "Finished." || echo "ERROR"
+}
+
+function backup_vscode_config_files() {
+    echo -------------------
+    echo "Backing up VSCode configuration files..."
+    echo -------------------
+    
+    pushd "$SECRET_STOW" || return 1
+    tar -I 'zstd --ultra -22' -cvf "$DECRYPTED_DATA_DIR/vscode.tar.zst" vscode
+    popd || return 1
+}
+
