@@ -102,6 +102,14 @@ function install_gnome_extensions() {
     popd || return 1
 }
 
+function install_adw_gtk3_theme() {
+    echo -------------------
+    echo "Installing Adw-GTK3 Theme..."
+    echo -------------------
+    
+    eval "$GET_FILE $GTK_THEME_URL" | tar -Jx -C "$HOME/.local/share/themes"  >> "$LOG" 2>&1 && echo "Finished." || echo "ERROR"
+}
+
 function install_distrobox() {
     echo -------------------
     echo "Installing Distrobox..."
