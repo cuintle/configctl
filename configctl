@@ -12,6 +12,75 @@ source "$CONFIG_VARS"
 # shellcheck disable=SC1091
 source "$CONFIGFILES_DIR"/zsh/.zprofile
 
+HELP='
+--check
+
+--enable-gnome-nightly
+
+--install-flatpak-runtimes
+
+--install-flatpak-apps
+
+--install-distrobox
+
+--download-gnome-extensions
+
+--install-gnome-extensions
+
+--install-gocryptfs
+
+--install-age
+
+--install-gh-cli
+
+--install-glab-cli
+
+--install-yq
+
+--download-qbittorrent-plugins
+
+--install-adw-gtk3-theme
+
+--set-url-handler
+
+--set-cisco-pttp-handler
+
+--install-vscode
+
+--install-vscodium
+
+--misc
+
+--decrypt
+
+--finish
+
+--install-ohmyzsh
+
+--install-poetry
+
+--install-pdm
+
+--enable-flathub
+
+--install_powerlevel10k
+
+--backup_freetube
+
+--backup_vscodium_config_files
+
+--backup_vscode_config_files
+
+--configure_gnome
+
+--configure-system
+'
+
+function print_help(){
+
+    echo "$HELP"
+}
+
 function install_oh_my_zsh() {
     echo -------------------
     echo "Installing Oh My ZSH..."
@@ -590,6 +659,10 @@ while :; do
 	case $1 in
 	    --check)
 		    if check; then echo "No error found."; else echo "Error found: Aborting..."; fi
+		    exit 0
+		    ;;
+        --help)
+		    if print_help; then echo ""; else echo "Error found: Aborting..."; fi
 		    exit 0
 		    ;;
 	    --enable-gnome-nightly)
