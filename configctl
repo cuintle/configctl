@@ -204,3 +204,89 @@ function set_cisco_pttp_handler() {
     echo -------------------
     xdg-settings set default-url-scheme-handler pttp cisco-ptsa.desktop  >> "$LOG" 2>&1 && echo "Finished." || echo "ERROR"
 }
+
+function install_flatpak_runtimes() {
+    CURRENT_FREE_PLAT=22.08
+    SUPPORTED_FREE_PLAT=21.08
+    CURRENT_KDE_PLAT=5.15-${CURRENT_FREE_PLAT}
+    # shellcheck disable=SC2034
+    SUPPORTED_KDE_PLAT=5.15-${SUPPORTED_FREE_PLAT}
+    CURRENT_GNOME_PLAT=44
+    SUPPORTED_GNOME_PLAT=43
+    echo -------------------
+    echo "Installing Flatpak runtimes..."
+    echo -------------------
+    
+    flatpak install flathub com.github.Eloston.UngoogledChromium.Codecs \
+    org.freedesktop.Platform/x86_64/${CURRENT_FREE_PLAT} \
+    org.freedesktop.Platform/x86_64/${SUPPORTED_FREE_PLAT} \
+    org.freedesktop.Platform.GL.default/x86_64/${CURRENT_FREE_PLAT} \
+    org.freedesktop.Platform.GL.default/x86_64/${SUPPORTED_FREE_PLAT} \
+    org.freedesktop.Platform.VAAPI.Intel/x86_64/${CURRENT_FREE_PLAT} \
+    org.freedesktop.Platform.VAAPI.Intel/x86_64/${SUPPORTED_FREE_PLAT} \
+    org.freedesktop.Platform.ffmpeg-full/x86_64/${SUPPORTED_FREE_PLAT} \
+    org.freedesktop.Platform.openh264/x86_64/2.0 \
+    org.gnome.Platform/x86_64/${CURRENT_GNOME_PLAT} \
+    org.gnome.Platform/x86_64/${SUPPORTED_GNOME_PLAT} \
+    org.gtk.Gtk3theme.Adwaita-dark \
+    org.gtk.Gtk3theme.adw-gtk3 \
+    org.gtk.Gtk3theme.adw-gtk3-dark \
+    org.kde.Platform/x86_64/${CURRENT_KDE_PLAT} \
+    org.kde.PlatformTheme.QGnomePlatform/x86_64/${CURRENT_KDE_PLAT} \
+    org.kde.PlatformTheme.QtSNI/x86_64/${CURRENT_KDE_PLAT} \
+    org.kde.WaylandDecoration.QGnomePlatform-decoration/x86_64/${CURRENT_KDE_PLAT} \
+    org.telegram.desktop.webview  --user --assumeyes >> "$LOG" 2>&1 && echo "Finished." || echo "ERROR"
+    
+}
+
+function install_flatpak_apps() {
+    echo -------------------
+    echo "Installing Flatpak apps..."
+    echo -------------------
+    
+    flatpak install flathub app.drey.Dialect \
+    app.drey.EarTag \
+    ar.xjuan.Cambalache \
+    com.bitstower.Markets \
+    com.bitwarden.desktop \
+    com.github.Eloston.UngoogledChromium \
+    com.github.alainm23.planner \
+    com.github.johnfactotum.Foliate \
+    com.github.liferooter.textpieces \
+    com.github.maoschanz.drawing \
+    com.github.rafostar.Clapper \
+    com.github.tchx84.Flatseal \
+    com.mattjakeman.ExtensionManager \
+    com.raggesilver.BlackBox \
+    com.stremio.Stremio \
+    fr.romainvigier.MetadataCleaner \
+    io.freetubeapp.FreeTube \
+    io.github.celluloid_player.Celluloid \
+    io.github.mightycreak.Diffuse \
+    io.github.mpobaschnig.Vaults \
+    io.github.seadve.Kooha \
+    io.gitlab.librewolf-community \
+    io.posidon.Paper \
+    nl.hjdskes.gcolor3 \
+    org.gnome.Calculator \
+    org.gnome.Calendar \
+    org.gnome.Evince \
+    org.gnome.FileRoller \
+    org.gnome.Geary \
+    org.gnome.Lollypop \
+    org.gnome.TextEditor \
+    org.gnome.Todo \
+    org.gnome.Weather \
+    org.gnome.clocks \
+    org.gnome.design.Contrast \
+    org.gnome.design.IconLibrary \
+    org.gnome.dspy org.gnome.eog \
+    org.gnome.gitg \
+    org.gnome.gitlab.somas.Apostrophe \
+    org.gnome.meld \
+    org.keepassxc.KeePassXC \
+    org.qbittorrent.qBittorrent \
+    org.telegram.desktop \
+    re.sonny.Junction --user --assumeyes >> "$LOG" 2>&1 && echo "Finished." || echo "ERROR"
+    
+}
