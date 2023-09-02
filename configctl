@@ -108,3 +108,31 @@ function install_distrobox() {
     echo -------------------
     eval "$GET_FILE $DISTROBOX_URL" | sh -s -- --next --prefix ~/.local >> "$LOG" 2>&1 && echo "Finished." || echo "ERROR"
 }
+
+
+function install_gocryptfs() {
+    GOCRYPTFS_BIN="$HOME/.local/bin/gocryptfs"
+    XRAY_BIN="$HOME/.local/bin/gocryptfs-xray"
+    
+    echo -------------------
+    echo "Installing GoCryptFS..."
+    echo -------------------
+    eval "$GET_FILE $GOCRYPTFS_URL" | tar -zx -C ~/.local/bin gocryptfs gocryptfs-xray >> "$LOG" 2>&1 && echo "Finished." || echo "ERROR"
+    
+    [[ -x "$GOCRYPTFS_BIN" ]] || chmod +x "$GOCRYPTFS_BIN"
+    [[ -x "$XRAY_BIN" ]] || chmod +x "$XRAY_BIN"
+    
+    }
+
+function install_age() {
+    AGE_BIN="$HOME/.local/bin/age"
+    KEYGEN_BIN="$HOME/.local/bin/age-keygen"
+    
+    echo -------------------
+    echo "Installing Age..."
+    echo -------------------
+    eval "$GET_FILE $AGE_URL" | tar -zx -C ~/.cache; cp ~/.cache/age/* ~/.local/bin >> "$LOG" 2>&1 && echo "Finished." || echo "ERROR"
+    [[ ! -x "$AGE_BIN" ]] || chmod +x "$AGE_BIN"
+    [[ ! -x "$KEYGEN_BIN" ]] || chmod +x "$KEYGEN_BIN"
+
+}
