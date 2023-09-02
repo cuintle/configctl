@@ -189,3 +189,18 @@ function download_qbittorrent_plugins() {
     popd || return 1
 
 }
+
+function set_url_handler() {
+    echo -------------------
+    echo "Setting up URL Handler..."
+    echo -------------------
+    xdg-settings set default-url-scheme-handler http re.sonny.Junction.desktop >> "$LOG" 2>&1 && echo "Finished." || echo "ERROR"
+    xdg-settings set default-url-scheme-handler https re.sonny.Junction.desktop >> "$LOG" 2>&1 && echo "Finished." || echo "ERROR"
+}
+
+function set_cisco_pttp_handler() {
+    echo -------------------
+    echo "Setting up CISCO PTTP Handler..."
+    echo -------------------
+    xdg-settings set default-url-scheme-handler pttp cisco-ptsa.desktop  >> "$LOG" 2>&1 && echo "Finished." || echo "ERROR"
+}
