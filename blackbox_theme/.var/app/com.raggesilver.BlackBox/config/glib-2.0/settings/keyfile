@@ -1,0 +1,14 @@
+[com/raggesilver/BlackBox]
+remember-window-size=true
+floating-controls=true
+font='MesloLGS NF 12'
+theme-bold-is-bright=true
+theme-dark='Flatty'
+use-sixel=true
+window-width=1251
+window-height=651
+style-preference=0
+floating-controls-hover-area=8
+headerbar-drag-area=false
+cursor-blink-mode=1
+cursor-shape=1
