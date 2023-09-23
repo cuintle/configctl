@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+function change_var() {
+    var_name="${1}"
+    content="${2}"
+    file="${3}"
+
+    if [ ! -f "${file}" ]; then
+        echo "Error: File '${file}' doesn't exist."
+        exit 1
+    fi
+
+    if ! grep -q "^${var_name}=" "${file}"; then
+        echo "Error: Variable '${var_name}' not found in '${file}'."
+        exit 1
+    fi
+
+    sed -i "s/^${var_name}\=.*/${var_name}=\"${content}\"/" "${file}"
+}
+
+if [ $# -ne 3 ]; then
+    echo "Usage: $0 <variable_name> <new_content> <file_path>"
+    exit 1
+fi
+
+change_var "$1" "$2" "$3"
