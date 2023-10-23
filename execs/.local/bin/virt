@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+
+DISK="--disk none"
+ISO_FILE=$(realpath $1)
+VIRTUAL_DISK_NAME=$2
+KS_FILE_NAME=$3
+
+[[ ! -e "$ISO_FILE" ]] && echo "Erro: O Arquivo $ISO_FILE não encontrado." # && return
+
+if [[ -n "$VIRTUAL_DISK_NAME" ]]; then    
+    VIRTUAL_DISK=$(realpath "$VIRTUAL_DISK_NAME")
+    if [[ ! -f "$VIRTUAL_DISK" ]]; then
+        echo "Erro: O Arquivo $VIRTUAL_DISK_NAME não foi encontrado. Gostaria de criar esse arquivo? (y/n)"
+        read -r REPLY
+        [[ $REPLY =~ ^[Yy]$ ]] && qemu-img create -f qcow2 "$VIRTUAL_DISK" 25G > /dev/null 2>&1 && echo "O disco $VIRTUAL_DISK_NAME foi criado com tamanho limite de 25GB" && DISK="--disk $VIRTUAL_DISK" RUNTIME_DISK="e 25GB de disco..." || RUNTIME_DISK="e sem arquivo de Disco..."
+    else
+        echo "O Arquivo $VIRTUAL_DISK_NAME já existe. Gostaria de usar esse arquivo? (y/n)"
+        read -r REPLY
+        [[ $REPLY =~ ^[Yy]$ ]] && DISK="--disk $VIRTUAL_DISK" RUNTIME_DISK="e usando o disco existente..." || RUNTIME_DISK="e sem arquivo de Disco..."
+        
+    fi
+fi
+
+if [[ -n "$KS_FILE_NAME" ]]; then
+    KS_FILE=$(realpath "$KS_FILE_NAME")
+    if [[ ! -f "$KS_FILE" ]]; then
+        echo "O Arquivo kickstart $KS_FILE_NAME não foi encontrado."
+        INJECT_KS=""
+    else
+        INJECT_KS="--initrd-inject $KS_FILE_NAME --extra-args=\"inst.ks=file:/$KS_FILE_NAME console=tty0\""
+    fi
+else
+    INJECT_KS=""
+fi
+
+NAME="Linux_Machine_""$RANDOM"
+COMMAND="virt-install --name $NAME \
+--memory 4092 --cpu host --vcpus 2 \
+--location $ISO_FILE,kernel=images/pxeboot/vmlinuz,initrd=images/pxeboot/initrd.img $DISK \
+--video virtio --virt-type kvm --boot uefi \
+--transient --destroy-on-exit --osinfo detect=on,require=off $INJECT_KS"
+
+echo "Executando a VM $NAME com 4GB RAM $RUNTIME_DISK"
+
+"$COMMAND" > /dev/null 2>&1
