@@ -1,0 +1,17 @@
+[Desktop Entry]
+Name=Codium Wayland
+Comment=Code Editing. Redefined.
+GenericName=Text Editor
+Exec=sh -c "exec /home/cuintle/.local/bin/distrobox enter code_editors -- env HOME=/home/cuintle/.local/share/distrobox_homes/Code_Editors XDG_CONFIG_HOME=/home/cuintle/.local/share/distrobox_homes/Code_Editors/.config codium --enable-features=Vulkan --no-sandbox --unity-launch"
+Icon=code-oss
+Type=Application
+StartupNotify=false
+Categories=TextEditor;Development;IDE;
+Actions=new-empty-window;
+Keywords=vscode;
+MimeType=text/x-c;text/x-csrc;text/x-changelog;text/x-chdr;text/x-c++hdr;text/x-python;application/x-python;application/javascript;application/x-javascript;text/x-javascript;text/javascript;text/x-js;text/x-shellscript;application/x-shellscript;text/x-sh;text/x-vala;text/x-makefile;text/x-c++;text/x-cpp;text/x-c++src;text/css;application/x-gnome-app-info;application/x-desktop;text/x-go;text/html;text/x-markdown;application/json;application/x-m4;application/xml;text/xml;application/x-yaml;text/x-sql;application/x-ruby;text/x-ruby;text/x-pkg-config;text/x-lua;text/x-php;application/x-php;text/x-php-source;application/x-php-source;text/x-perl;application/x-perl;
+
+[Desktop Action new-empty-window]
+Name=New Empty Window
+Exec=sh -c "exec /home/cuintle/.local/bin/distrobox enter code_editors -- env HOME=/home/cuintle/.local/share/distrobox_homes/Code_Editors XDG_CONFIG_HOME=/home/cuintle/.local/share/distrobox_homes/Code_Editors/.config codium --enable-features=Vulkan --no-sandbox --unity-launch --new-window"
+Icon=code-oss
