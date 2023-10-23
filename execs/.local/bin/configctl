@@ -49,8 +49,6 @@ HELP='
 
 --install-vscodium
 
---misc
-
 --decrypt
 
 --finish
@@ -401,6 +399,8 @@ function backup_gocryptfs_encrypted_files() {
     echo "Backing up encrypted files..."
     echo -------------------
     
+    ENCRYPTED_FILE="$ENCRYPTED_DIR/encrypted.tar.zst"
+    
     pushd "$ENCRYPTED_DATA_DIR" || return 1
     tar -I 'zstd --ultra -22' -cf "$ENCRYPTED_FILE" . 
     popd || return 1
@@ -420,6 +420,7 @@ function decrypt_gocryptfs_files() {
     if "$HOME"/.local/bin/gocryptfs -passfile "$PASSFILE" "$ENCRYPTED_DATA_DIR" "$DECRYPTED_DATA_DIR" >> "$LOG" 2>&1; then echo "Your files was successfully decrypted."; else DECRYPT_ERROR="ERROR"; fi
         
     if [[ -n "$DECRYPT_ERROR" ]]; then
+    	echo "ERROR: Possibly wrong password"
         rm "$PASSFILE"
         if [[ "$(ls -A "$DECRYPTED_DATA_DIR")" ]]; then
             fusermount3 -u "$DECRYPTED_DATA_DIR"
@@ -463,6 +464,8 @@ function backup_freetube() {
     pushd $TMP_DIR || return 1
     tar -I 'zstd --ultra -22' -cvf "$DECRYPTED_DATA_DIR"/freetube.tar.zst history.db Preferences profiles.db playlists.db settings.db
     popd || return 1
+
+    echo "Saved in $DECRYPTED_DATA_DIR/freetube.tar.zst"
 }
 
 function extract_vscodium_config_files() {
@@ -500,8 +503,7 @@ function backup_vscode_config_files() {
     pushd "$SECRET_STOW" || return 1
     tar -I 'zstd --ultra -22' -cvf "$DECRYPTED_DATA_DIR/vscode.tar.zst" vscode
     popd || return 1
-}
-
+}  
     
 function extract_templates() {
     echo -------------------
@@ -565,9 +567,9 @@ function configure_system() {
     
     # download_qbittorrent_plugins
     
-    download_gnome_extensions
+    # download_gnome_extensions
  
-    install_gnome_extensions 
+    # install_gnome_extensions 
     
     install_adw_gtk3_theme 
     
@@ -575,7 +577,7 @@ function configure_system() {
     
     extract_fonts
     
-    install_age
+    install_age &
     
     install_gh_cli
     
@@ -591,36 +593,36 @@ function configure_system() {
     
     install_distrobox
     
-    # install_vscode &
-    # INSTALLING_VSCODE=$!
+    install_vscode &
+    INSTALLING_VSCODE=$!
     
-    install_vscodium &
-    CREATING_VSCODIUM_DISTROBOX=$!
+    #install_vscodium &
+    # CREATING_VSCODIUM_DISTROBOX=$!
        
     wait "$INSTALLING_CRYPT_TOOLS"
     
     wait "$INSTALLING_FLATPAK_APPS"
     set_url_handler
     
-    extract_gocryptfs_encrypted_files
+    # extract_gocryptfs_encrypted_files
 
-    decrypt_gocryptfs_files
+    # decrypt_gocryptfs_files
     
-    extract_freetube_compressed_files && configure_freetube
+    # extract_freetube_compressed_files && configure_freetube
     
-    wait "$CREATING_VSCODIUM_DISTROBOX"
-    distrobox enter codium -- /usr/bin/true &
-    INSTALLING_VSCODIUM=$!
-    wait "$INSTALLING_VSCODIUM"
+    wait "$INSTALLING_VSCODE"
+    distrobox enter code -- /usr/bin/true &
+    STARTING_VSCODE_DISTROBOX=$!
     
-    extract_vscodium_config_files
-    stow vscodium --dir "$SECRET_STOW"  --target "$HOME"
+    # wait "$INSTALLING_VSCODIUM"
+    # extract_vscodium_config_files
+    # stow vscodium --dir "$SECRET_STOW"  --target "$HOME"
     
-    #wait "$INSTALLING_VSCODE"
-    #extract_vscode_config_files
-    #stow vscode --dir "$SECRET_STOW"  --target "$HOME"
+    wait "$STARTING_VSCODE_DISTROBOX"
+    extract_vscode_config_files
+    stow vscode --dir "$SECRET_STOW"  --target "$HOME"
     
-    extract_encrypted_history
+    # extract_encrypted_history
     
     extract_templates
     
@@ -638,9 +640,6 @@ function configure_system() {
     
     rm -f "$APPS_DESKTOP_FILES"/codium.desktop
     stow apps --dir "$CONFIGFILES_DIR"  --target "$HOME"
-    
-    rm -f "$HOME"/.config/micro/settings.json
-    stow micro --dir "$CONFIGFILES_DIR"  --target "$HOME"
     
     stow history --dir "$SECRET_STOW"  --target "$HOME"
     
@@ -735,10 +734,6 @@ while :; do
 			;;
 		--install-vscodium)
 	        if install_vscodium; then echo "No error found."; else echo "Error found: Aborting..."; fi
-			exit 0
-			;;
-		--misc)
-	        if misc; then echo "No error found."; else echo "Error found: Aborting..."; fi
 			exit 0
 			;;
 		--decrypt)
