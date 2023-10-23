@@ -47,6 +47,12 @@ function check_dirs() {
     if [ ! -d "$FREETUBE_SECRET_CONFIG_DIR" ]; then
         mkdir -p "$FREETUBE_SECRET_CONFIG_DIR"
     fi
+    if [ ! -d "$ENCRYPTED_DATA_DIR" ]; then
+        mkdir -p "$ENCRYPTED_DATA_DIR"
+    fi
+    if [ ! -d "$DECRYPTED_DATA_DIR" ]; then
+        mkdir -p "$DECRYPTED_DATA_DIR"
+    fi
     if [ ! -d "$FONTS_DIR" ]; then
         mkdir -p "$FONTS_DIR"
     fi
