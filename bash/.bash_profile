@@ -19,7 +19,7 @@ fi
 
 [[ ! "$PATH" =~ $XDG_DATA_HOME/flatpak/exports/bin ]] || PATH="$XDG_DATA_HOME/flatpak/exports/bin:$PATH"
 
-gh completion -s bash
+# gh completion -s bash
 
 export XDG_DATA_HOME
 export XDG_CONFIG_HOME
