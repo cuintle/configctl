@@ -12,15 +12,13 @@ then
 fi
 
 
-[[ "$XDG_DATA_HOME" =~ $HOME/.local/share ]] || XDG_DATA_HOME="$HOME/.local/share"
+[[ -n ${XDG_DATA_HOME:-} ]] || XDG_DATA_HOME="$HOME/.local/share"
 
-# [[ "$PATH" =~ "$XDG_DATA_HOME/JetBrains/Toolbox/scripts" ]] || PATH="$XDG_DATA_HOME/JetBrains/Toolbox/scripts:$PATH"
+[[ -n ${XDG_CONFIG_HOME:-} ]] || XDG_CONFIG_HOME="$HOME/.config"
 
-[[ "$XDG_CONFIG_HOME" =~ $HOME/.config ]] || XDG_CONFIG_HOME="$HOME/.config"
+[[ -n ${XDG_CACHE_HOME:-} ]] || XDG_CACHE_HOME="$HOME/.cache"
 
-[[ "$XDG_STATE_HOME" =~ $HOME/.local/state ]] || XDG_STATE_HOME="$HOME/.local/state"
-
-[[ "$XDG_CACHE_HOME" =~ $HOME/.cache ]] || XDG_CACHE_HOME="$HOME/.cache"
+[[ -n ${XDG_STATE_HOME:-} ]] || XDG_STATE_HOME="$HOME/.local/state"
 
 if ! [[ "$PATH" =~ $XDG_DATA_HOME/flatpak/exports/bin ]]
 then
