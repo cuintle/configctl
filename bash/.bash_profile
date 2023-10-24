@@ -11,16 +11,13 @@ then
     PATH="$HOME/.local/bin:$PATH"
 fi
 
-[[ "$XDG_DATA_HOME" =~ $HOME/.local/share ]] || XDG_DATA_HOME="$HOME/.local/share"
+[[ -n ${XDG_DATA_HOME:-} ]] || XDG_DATA_HOME="$HOME/.local/share"
 
-[[ "$XDG_CONFIG_HOME" =~ $HOME/.config ]] || XDG_CONFIG_HOME="$HOME/.config"
+[[ -n ${XDG_DATA_HOME:-} ]] || XDG_CONFIG_HOME="$HOME/.config"
 
-[[ "$XDG_CACHE_HOME" =~ $HOME/.cache ]] || XDG_CACHE_HOME="$HOME/.cache"
+[[ -n ${XDG_DATA_HOME:-} ]] || XDG_CACHE_HOME="$HOME/.cache"
 
-if ! [[ "$PATH" =~ $XDG_DATA_HOME/flatpak/exports/bin ]]
-then
-    PATH="$XDG_DATA_HOME/flatpak/exports/bin:$PATH"
-fi
+[[ ! "$PATH" =~ $XDG_DATA_HOME/flatpak/exports/bin ]] || PATH="$XDG_DATA_HOME/flatpak/exports/bin:$PATH"
 
 gh completion -s bash
 
