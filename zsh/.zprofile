@@ -27,7 +27,7 @@ fi
 
 export GPG_TTY=$(tty)
 
-gh completion -s zsh
+# gh completion -s zsh
 
 export XDG_DATA_HOME
 export XDG_CONFIG_HOME
