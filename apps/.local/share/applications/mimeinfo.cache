@@ -58,7 +58,6 @@ image/gif=ungoogled_chromium.desktop;
 image/jpeg=ungoogled_chromium.desktop;
 image/png=ungoogled_chromium.desktop;
 image/webp=ungoogled_chromium.desktop;
-inode/directory=codium.desktop;
 text/comma-separated-values=onlyoffice.desktop;
 text/csv=onlyoffice.desktop;
 text/docxf=onlyoffice.desktop;

@@ -2,7 +2,7 @@
 Name=Code Wayland
 Comment=Code Editing. Redefined.
 GenericName=Text Editor
-Exec=sh -c "exec /home/cuintle/.local/bin/distrobox enter code_editors -- env HOME=/home/cuintle/.local/share/distrobox_homes/Code_Editors XDG_CONFIG_HOME=/home/cuintle/.local/share/distrobox_homes/Code_Editors/.config code --enable-features=Vulkan --no-sandbox --unity-launch"
+Exec=sh -c "exec /home/cuintle/.local/bin/distrobox enter code_editors -- env HOME=/home/cuintle/.local/share/distrobox_homes/Code_Editors XDG_CONFIG_HOME=/home/cuintle/.local/share/distrobox_homes/Code_Editors/.config code --enable-features=Vulkan --unity-launch"
 Icon=vscode
 Type=Application
 StartupNotify=false
@@ -13,5 +13,5 @@ MimeType=text/x-c;text/x-csrc;text/x-changelog;text/x-chdr;text/x-c++hdr;text/x-
 
 [Desktop Action new-empty-window]
 Name=New Empty Window
-Exec=sh -c "exec /home/cuintle/.local/bin/distrobox enter code_editors -- env HOME=/home/cuintle/.local/share/distrobox_homes/Code_Editors XDG_CONFIG_HOME=/home/cuintle/.local/share/distrobox_homes/Code_Editors/.config code --enable-features=Vulkan --no-sandbox --unity-launch --new-window"
+Exec=sh -c "exec /home/cuintle/.local/bin/distrobox enter code_editors -- env HOME=/home/cuintle/.local/share/distrobox_homes/Code_Editors XDG_CONFIG_HOME=/home/cuintle/.local/share/distrobox_homes/Code_Editors/.config code --enable-features=Vulkan --unity-launch --new-window"
 Icon=code

@@ -2,7 +2,7 @@
 Version=1.0
 Name=Stremio Wayland
 Comment=Video organizer for your Movies, TV Shows and TV Channels
-Exec=/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=/app/opt/stremio/stremio --file-forwarding com.stremio.Stremio --no-sandbox --ozone-platform-hint=auto --enable-features=Vulkan --ignore-gpu-blocklist --enable-gpu-rasterization --enable-zero-copy --unhandled-rejections=strict @@u %U @@ 
+Exec=/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=/app/opt/stremio/stremio --file-forwarding com.stremio.Stremio --ozone-platform-hint=auto --enable-features=Vulkan --ignore-gpu-blocklist --enable-gpu-rasterization --enable-zero-copy --unhandled-rejections=strict @@u %U @@ 
 Icon=com.stremio.Stremio
 Terminal=false
 Type=Application
