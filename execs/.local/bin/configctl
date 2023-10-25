@@ -210,6 +210,8 @@ function install_age() {
     echo -------------------
     echo "Installing Age..."
     echo -------------------
+
+    [[ -d "$HOME/.cache/age" ]] || mkdir -p "$HOME/.cache/age"
     eval "$GET_FILE $AGE_URL" | tar -zx -C ~/.cache; cp ~/.cache/age/* ~/.local/bin >> "$LOG" 2>&1 && echo "Finished." || echo "ERROR"
     [[ ! -x "$AGE_BIN" ]] || chmod +x "$AGE_BIN"
     [[ ! -x "$KEYGEN_BIN" ]] || chmod +x "$KEYGEN_BIN"
@@ -222,7 +224,9 @@ function install_yq() {
 
 function install_gh_cli() {
     GH_BIN="$HOME/.local/bin/gh"
-    # GH_MAN="$HOME/.local/share/man/man1"
+    GH_MAN="$HOME/.local/share/man/man1"
+
+    [[ -d "$GH_MAN" ]] || mkdir -p "$GH_MAN"
 
     echo -------------------
     echo "Installing Github Cli..."
@@ -318,10 +322,8 @@ function install_flatpak_apps() {
     flatpak install flathub app.drey.Dialect \
     app.drey.EarTag \
     ar.xjuan.Cambalache \
-    com.bitstower.Markets \
     com.bitwarden.desktop \
     com.github.Eloston.UngoogledChromium \
-    com.github.alainm23.planner \
     com.github.johnfactotum.Foliate \
     com.github.liferooter.textpieces \
     com.github.maoschanz.drawing \
@@ -525,7 +527,7 @@ function extract_icons() {
     echo -------------------
     echo "Extracting icons..."
     echo -------------------
-    
+    [[ -d "$XDG_DATA_HOME/icons" ]] || mkdir "$XDG_DATA_HOME/icons"
     tar -I 'zstd' -xvf "$CONFIGFILES_DIR/archives/icons.tar.zst" -C "$XDG_DATA_HOME/icons" >> "$LOG" 2>&1 && echo "Finished." || echo "ERROR"
 }
 
@@ -533,7 +535,8 @@ function extract_fonts() {
     echo -------------------
     echo "Extracting fonts..."
     echo -------------------
-    
+
+    [[ -d "$XDG_DATA_HOME/fonts" ]] || mkdir "$XDG_DATA_HOME/fonts"
     tar -I 'zstd' -xvf "$CONFIGFILES_DIR/archives/fonts.tar.zst" -C "$XDG_DATA_HOME/fonts" >> "$LOG" 2>&1 && echo "Finished." || echo "ERROR"
 }
 
@@ -619,12 +622,12 @@ function configure_system() {
     # stow vscodium --dir "$SECRET_STOW"  --target "$HOME"
     
     wait "$STARTING_VSCODE_DISTROBOX"
-    extract_vscode_config_files
-    stow vscode --dir "$SECRET_STOW"  --target "$HOME"
+    # extract_vscode_config_files
+    # stow vscode --dir "$SECRET_STOW"  --target "$HOME"
     
     # extract_encrypted_history
     
-    extract_templates
+    # extract_templates
     
     pushd "$HOME" || return 1
     rm -f {.p10k.zsh,.zprofile,.zsh_history,.zshrc}
@@ -641,7 +644,7 @@ function configure_system() {
     rm -f "$APPS_DESKTOP_FILES"/codium.desktop
     stow apps --dir "$CONFIGFILES_DIR"  --target "$HOME"
     
-    stow history --dir "$SECRET_STOW"  --target "$HOME"
+    # stow history --dir "$SECRET_STOW"  --target "$HOME"
     
     stow blackbox_theme --dir "$CONFIGFILES_DIR"  --target "$HOME"
     
