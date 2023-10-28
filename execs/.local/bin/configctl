@@ -212,7 +212,8 @@ function install_age() {
     echo -------------------
 
     [[ -d "$HOME/.cache/age" ]] || mkdir -p "$HOME/.cache/age"
-    eval "$GET_FILE $AGE_URL" | tar -zx -C ~/.cache; cp ~/.cache/age/* ~/.local/bin >> "$LOG" 2>&1 && echo "Finished." || echo "ERROR"
+    
+    eval "$GET_FILE $AGE_URL" | tar -zx -C "$HOME/.cache"; cp "$HOME"/.cache/age/{age,age-keygen} ~/.local/bin >> "$LOG" 2>&1 && echo "Finished." || echo "ERROR"
     [[ ! -x "$AGE_BIN" ]] || chmod +x "$AGE_BIN"
     [[ ! -x "$KEYGEN_BIN" ]] || chmod +x "$KEYGEN_BIN"
 
@@ -308,7 +309,6 @@ function install_flatpak_runtimes() {
     org.gtk.Gtk3theme.adw-gtk3-dark \
     org.kde.Platform/x86_64/${CURRENT_KDE_PLAT} \
     org.kde.PlatformTheme.QGnomePlatform/x86_64/${CURRENT_KDE_PLAT} \
-    org.kde.PlatformTheme.QtSNI/x86_64/${CURRENT_KDE_PLAT} \
     org.kde.WaylandDecoration.QGnomePlatform-decoration/x86_64/${CURRENT_KDE_PLAT} \
     org.telegram.desktop.webview  --user --assumeyes >> "$LOG" 2>&1 && echo "Finished." || echo "ERROR"
     
