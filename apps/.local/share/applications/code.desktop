@@ -2,7 +2,7 @@
 Name=Code Wayland
 Comment=Code Editing. Redefined.
 GenericName=Text Editor
-Exec=sh -c "exec /home/cuintle/.local/bin/distrobox enter code_editors -- env HOME=/home/cuintle/.local/share/distrobox_homes/Code_Editors XDG_CONFIG_HOME=/home/cuintle/.local/share/distrobox_homes/Code_Editors/.config code --enable-features=Vulkan --unity-launch"
+Exec=sh -c "exec /home/cuintle/.local/bin/distrobox enter code_editors -- env HOME=/home/cuintle/.local/share/distrobox_homes/Code_Editors XDG_CONFIG_HOME=/home/cuintle/.local/share/distrobox_homes/Code_Editors/.config code --enable-gpu-rasterization --enable-zero-copy --enable-features=Vulkan --unity-launch"
 Icon=vscode
 Type=Application
 StartupNotify=false
