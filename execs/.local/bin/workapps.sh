@@ -14,4 +14,4 @@ workapps=(
   "exec /home/cuintle/.local/bin/distrobox enter code -- env HOME=/home/cuintle/.local/share/distrobox_homes/Code XDG_CONFIG_HOME=/home/cuintle/.local/share/distrobox_homes/Code/.config code --enable-features=Vulkan --enable-gpu-rasterization --enable-zero-copy --unity-launch"
 )
 
-parallel --progress --jobs 3 --delay 3 --timeout 3600 --shuf "sh -c {}" ::: "${workapps[@]}"
+parallel --progress --jobs 3 --delay 3 --timeout 120 --shuf "sh -c {}" ::: "${workapps[@]}"
