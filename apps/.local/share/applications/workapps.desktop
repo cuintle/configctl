@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=Work App
+Comment=Launch all apps used to work
+GenericName=Development
+Exec=sh -c "exec  /home/cuintle/.local/bin/workapps.sh"
+Icon=codium
+Type=Application
+StartupNotify=false
+Categories=Development
+Keywords=work
+
