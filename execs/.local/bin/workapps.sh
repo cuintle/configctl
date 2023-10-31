@@ -3,7 +3,7 @@
 workapps=(
   "flatpak run org.gnome.Geary &"
   "flatpak run org.qbittorrent.qBittorrent &"
-  "flatpak run com.bitwarden.desktop --ozone-platform-hint=auto --enable-gpu-rasterization --enable-zero-copy --enable-features=Vulkan &"
+  "flatpak run com.bitwarden.desktop --disable-gpu-driver-bug-workarounds --ozone-platform-hint=auto --enable-zero-copy --enable-features=Vulkan &"
   "flatpak run org.telegram.desktop &"
   "flatpak run com.rtosta.zapzap &"
   "flatpak run io.freetubeapp.FreeTube --enable-gpu-rasterization --enable-zero-copy --enable-features=Vulkan &"
