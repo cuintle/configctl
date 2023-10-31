@@ -6,7 +6,7 @@ workapps=(
   "flatpak run com.bitwarden.desktop --ozone-platform-hint=auto --enable-gpu-rasterization --enable-zero-copy --enable-features=Vulkan &"
   "flatpak run org.telegram.desktop &"
   "flatpak run com.rtosta.zapzap &"
-  "flatpak run io.freetubeapp.FreeTube --ozone-platform-hint=auto --enable-gpu-rasterization --enable-zero-copy --enable-features=Vulkan &"
+  "flatpak run io.freetubeapp.FreeTube --enable-gpu-rasterization --enable-zero-copy --enable-features=Vulkan &"
   "flatpak run re.sonny.Tangram &"
   "flatpak run com.raggesilver.BlackBox &"
   "flatpak run io.gitlab.librewolf-community &"
